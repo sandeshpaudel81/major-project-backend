@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <form action="/prediction/" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <label for="fname">Front Image:</label>
+        <input type="file" accept="image/*" name="frontImage" />
+      </div>
+      <div>
+        <label for="fname">Back Image:</label>
+        <input type="file" accept="image/*" name="backImage" />
+      </div>
+      <br />
+      <input type="submit" />
+    </form>
+  </body>
+</html>
