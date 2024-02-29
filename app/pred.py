@@ -285,7 +285,7 @@ def get_back_pred(backImage):
 
     roi = [
         [(c['typeX']+415,c['typeY']),(c['typeX']+700,c['typeY']+70),'text','type'],
-        [(c['nameX']+190,c['nameY']),(c['nameX']+690,c['nameY']+70),'text','name'],
+        [(c['nameX']+190,c['nameY']),(c['nameX']+690,c['nameY']+70),'text','nameOfOfficer'],
         [(c['dateX']+235,c['dateY']),(c['dateX']+600,c['dateY']+70),'text','dateofissue'],
       ]
     imgshow = result.copy()

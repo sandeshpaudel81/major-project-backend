@@ -23,7 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.home),
-    path('prediction/', views.PredictionView.as_view(), name = 'model_prediction')
+    path('prediction/', views.PredictionView.as_view(), name = 'model_prediction'),
+    path('web-prediction/', views.WebPredictionView.as_view(), name = 'web_prediction')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
