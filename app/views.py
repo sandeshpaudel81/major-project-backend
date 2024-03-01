@@ -26,21 +26,21 @@ class PredictionView(APIView):
         # # image = ImageModel.objects.create(front=front_image, back=back_image)
         front_res = get_front_pred(frontImage)
         back_res = get_back_pred(backImage)
-        front_res.update(back_res)
-        print(front_res)
-        json_data = {}
-        for key, value in front_res.items():
-            valueData = postpro(key, value)
-            val = valueData.encode('unicode_escape').decode('utf-8')
-            print(val)
-            pattern = r'\\x..'
-            output_string = re.sub(pattern, '', val)
-            json_data[key] = output_string
-        # json_data = json.dumps(front_res, ensure_ascii=False)
-        # print(json_data)
-        # front_res['name'] = unicodedata.normalize('NFC', 'पुरुष')
-        # print(front_res)
-        return Response(json_data, status=status.HTTP_200_OK)
+        if('error' in front_res.keys()):
+            return Response(front_res, status=status.HTTP_200_OK)
+        elif('error' in back_res.keys()):
+            return Response(back_res, status=status.HTTP_200_OK)
+        else:
+            front_res.update(back_res)
+            json_data = {}
+            for key, value in front_res.items():
+                valueData = postpro(key, value)
+                val = valueData.encode('unicode_escape').decode('utf-8')
+                pattern = r'\\x..'
+                output_string = re.sub(pattern, '', val)
+                json_data[key] = output_string
+            res_data = {'data': json_data}
+            return Response(res_data, status=status.HTTP_200_OK)
     
 
 class WebPredictionView(APIView): 
@@ -50,11 +50,21 @@ class WebPredictionView(APIView):
         # image = ImageModel.objects.create(front=front_image, back=back_image)
         front_res = get_front_pred(front_image)
         back_res = get_back_pred(back_image)
-        data = {
-            'front': front_res,
-            'back': back_res
-        }
-        return Response(data, status=status.HTTP_200_OK)
+        if('error' in front_res.keys()):
+            return Response(front_res, status=status.HTTP_400_BAD_REQUEST)
+        elif('error' in back_res.keys()):
+            return Response(back_res, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            front_res.update(back_res)
+            json_data = {}
+            for key, value in front_res.items():
+                valueData = postpro(key, value)
+                val = valueData.encode('unicode_escape').decode('utf-8')
+                pattern = r'\\x..'
+                output_string = re.sub(pattern, '', val)
+                json_data[key] = output_string
+            res_data = {'data': json_data}
+            return Response(res_data, status=status.HTTP_200_OK)
     
 
 def home(request):
