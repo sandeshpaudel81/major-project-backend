@@ -27,9 +27,9 @@ class PredictionView(APIView):
         front_res = get_front_pred(frontImage)
         back_res = get_back_pred(backImage)
         if('error' in front_res.keys()):
-            return Response(front_res, status=status.HTTP_200_OK)
+            return Response(front_res, status=status.HTTP_400_BAD_REQUEST)
         elif('error' in back_res.keys()):
-            return Response(back_res, status=status.HTTP_200_OK)
+            return Response(back_res, status=status.HTTP_400_BAD_REQUEST)
         else:
             front_res.update(back_res)
             json_data = {}
